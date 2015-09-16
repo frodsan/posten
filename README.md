@@ -68,7 +68,7 @@ You can use inheritance to create mailer classes:
 
 ```ruby
 class UserMailer < Posten
-  defaults from: "admin@posten.gem"
+  defaults from: "team@posten.gem"
 
   def welcome_mail(user)
     deliver(
@@ -85,6 +85,40 @@ mailer.welcome_mail(User.first)
 
 Defaults are inherited but can be changed through the `defaults` method.
 
+Templates
+---------
+
+You can render templates using the `render` method. It uses the template
+engine [Mote][mote].
+
+```ruby
+class UserMailer < Posten
+  defaults from: "team@posten.gem"
+
+  def welcome_email(user)
+    deliver(
+      to: user.email,
+      subject: "Welcome #{ user.name }!",
+      text: render("welcome.txt", user: user),
+      html: render("welcome.html", user: user)
+    )
+  end
+end
+```
+
+By default, it assumes that all mail templates are placed in a folder named
+`mails` and that they use the `.mote` extension:
+
+```
+# mails/welcome.txt.mote
+Hi {{ user.name }}!
+
+# mails/welcome.html.mote
+<b>Hi {{ user.name }}!</b>
+```
+
+Check [Mote's GitHub repository][mote] for more information.
+
 Testing
 -------
 
@@ -92,7 +126,10 @@ If you don't want to call the actual delivery method in your tests, you
 can use `posten/test`:
 
 ```ruby
+require "posten"
 require "posten/test"
+
+Posten.connect({ ... })
 
 posten = Posten.new
 posten.deliver(to: "alice@posten.gem", subject: "hei")
@@ -180,3 +217,4 @@ $ gem install posten
 ```
 
 [cutest]: https://github.com/djanowski/cutest
+[mote]: https://github.com/soveran/mote

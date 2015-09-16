@@ -1,8 +1,10 @@
 require "malone"
+require "mote"
 require "seteable"
 require_relative "posten/version"
 
 class Posten
+  include Mote::Helpers
   include Seteable
 
   def self.connect(options)
@@ -32,6 +34,15 @@ class Posten
   def defaults
     return settings[:defaults]
   end
+
+  def render(template, params = {})
+    return mote(view_path(template), params.merge(app: self), TOPLEVEL_BINDING)
+  end
+
+  private def view_path(template)
+    return File.join(settings[:views], "#{ template }.mote")
+  end
 end
 
 Posten.settings[:defaults] = {}
+Posten.settings[:views] = File.expand_path("mails", Dir.pwd)
