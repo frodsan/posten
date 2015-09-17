@@ -111,13 +111,38 @@ By default, it assumes that all mail templates are placed in a folder named
 
 ```
 # mails/welcome.txt.mote
-Hi {{ user.name }}!
+Welcome {{ user.name }}!
 
 # mails/welcome.html.mote
-<b>Hi {{ user.name }}!</b>
+<b>Welcome {{ user.name }}!</b>
 ```
 
 Check [Mote's GitHub repository][mote] for more information.
+
+Helpers
+-------
+
+Included helper modules are available inside the template through the `app`
+variable.
+
+```ruby
+module TextHelper
+  def titleize(str)
+    return str.gsub(/\w+/) { |x| x.capitalize }
+  end
+end
+
+class UserMailer < Posten
+  include TextHelper
+
+  defaults from: "team@posten.gem"
+
+  # ...
+end
+
+# mails/welcome.txt.mote
+welcome {{ app.titleize(user.name) }}!
+```
 
 Testing
 -------
