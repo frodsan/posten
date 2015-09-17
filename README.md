@@ -144,6 +144,39 @@ end
 welcome {{ app.titleize(user.name) }}!
 ```
 
+Development
+-----------
+
+You can use [mt][mt] to fake a SMTP server and print mails to STDOUT.
+
+```
+$ gem install mt
+$ mt 2525
+```
+
+Update the smtp settings with the fake SMTP server url. It's recommended
+to store configuration in environment variables.
+
+```ruby
+# SMTP_URL => "smtp://localhost:2525"
+Posten.connect(url: ENV.fetch("SMTP_URL"))
+```
+
+Enjoy:
+
+```
+$ mt 2525
+---
+from: bob@posten.gem
+to: alice@posten.gem
+Reply-To:
+subject: =?utf-8?Q?hello?=
+Message-ID: <1442511985.7632298.501.70146383400960@me.com>
+Date: Thu, 17 Sep 2015 19:46:25 +0200
+
+Can you keep a secret?
+```
+
 Testing
 -------
 
@@ -243,3 +276,4 @@ $ gem install posten
 
 [cutest]: https://github.com/djanowski/cutest
 [mote]: https://github.com/soveran/mote
+[mt]: https://github.com/soveran/mt
