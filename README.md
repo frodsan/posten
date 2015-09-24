@@ -204,16 +204,14 @@ mailer.welcome_mail(User.first)
 UserMailer.deliveries.count # => 1
 ```
 
-`Posten.deliveries` is simply an array. If you want to have a clean slate,
-you can reset it manually using Array's `clear` method before each test is
-executed. The next example uses the testing library [Cutest][cutest]:
+Use `Posten.reset` to have a clean slate before each test is executed:
 
 ```ruby
 require "cutest"
 require "posten/test"
 
-setup do
-  Posten.deliveries.clear
+prepare do
+  Posten.reset
 end
 
 scope "signup" do
@@ -229,6 +227,8 @@ scope "signup" do
   end
 end
 ```
+
+The example above uses the testing library [Cutest][cutest].
 
 SMTP Settings
 -------------

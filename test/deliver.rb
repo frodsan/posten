@@ -1,7 +1,7 @@
 require "malone/test"
 
 setup do
-  Malone.deliveries.clear
+  Malone.reset_deliveries
 
   Posten.connect(url: "smtp://foo%40bar.com:pass1234@smtp.gmail.com:587")
 end

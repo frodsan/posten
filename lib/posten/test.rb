@@ -5,6 +5,10 @@ class Posten
     return @deliveries ||= []
   end
 
+  def self.reset
+    deliveries.clear
+  end
+
   def deliver(options)
     deliveries << OpenStruct.new(defaults.merge(options))
   end

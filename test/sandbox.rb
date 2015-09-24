@@ -1,5 +1,11 @@
 require_relative "../lib/posten/test"
 
+setup do
+  Posten.reset
+
+  assert_equal 0, Posten.deliveries.size
+end
+
 test "sandbox" do
   Posten.connect({})
 
