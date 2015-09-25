@@ -1,12 +1,16 @@
 require "ostruct"
 
 class Posten
+  def self.sandbox
+    return @@sandbox ||= Hash.new { |h, k| h[k] = [] }
+  end
+
   def self.deliveries
-    return @deliveries ||= []
+    return sandbox[self.name]
   end
 
   def self.reset
-    deliveries.clear
+    sandbox.clear
   end
 
   undef_method(:deliver)
