@@ -27,7 +27,7 @@ class Posten
     settings[:smtp] or raise("Missing configuration: Try `Posten.connect`")
   end
 
-  def deliver(options)
+  def deliver(options = {})
     return @malone.deliver(defaults.merge(options))
   end
 

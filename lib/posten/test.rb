@@ -11,7 +11,7 @@ class Posten
 
   undef_method(:deliver)
 
-  def deliver(options)
+  def deliver(options = {})
     deliveries << OpenStruct.new(defaults.merge(options))
   end
 
