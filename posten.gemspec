@@ -14,7 +14,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency "malone", "~> 1.2.0"
   s.add_dependency "mote", "~> 1.1.4"
-  s.add_dependency "seteable", "1.0.0"
+  s.add_dependency "seteable", "1.1.0"
 
   s.add_development_dependency "cutest", "~> 1.2"
 end
